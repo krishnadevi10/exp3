@@ -1,52 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        // Define any environment variables here
-        APP_NAME = "MyApp"
-    }
-
     stages {
-
         stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
-                // Example Git checkout
-                git url: 'https://github.com/krishnadevi10/exp3.git', branch: 'main'
+                git 'https://github.com/krishnadevi10/exp3.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                // Example: Use Maven
-                sh 'mvn clean install'
+                sh 'echo Building the project...'
+                // Replace with actual build command, e.g. sh 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running unit tests...'
-                // Example: Run tests
-                sh 'mvn test'
+                sh 'echo Running tests...'
+                // Replace with actual test command
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
-                // Example deploy command
-                sh 'scp target/${APP_NAME}.jar user@server:/opt/app/'
+                sh 'echo Deploying the application...'
+                // Replace with actual deploy commands
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
