@@ -1,31 +1,53 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/krishnadevi10/exp3.git'
-            }
-        }
+    environment {
+        DEPLOY_ENV = 'staging'  // Set this to 'staging' or 'production' as per your requirement
+    }
 
+    stages {
         stage('Build') {
             steps {
-                sh 'echo Building the project...'
-                // Replace with actual build command, e.g. sh 'mvn clean install'
+                script {
+                    echo 'Building the project...'
+                    // Skip installing dependencies if not required
+                    echo 'No dependencies to install.'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'echo Running tests...'
-                // Replace with actual test command
+                script {
+                    echo 'Running tests...'
+                    // Add a basic test command if you have any tests (e.g., Python unittests)
+                    // Example:
+                    // sh 'python -m unittest discover'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'echo Deploying the application...'
-                // Replace with actual deploy commands
+                script {
+                    // Bash script to deploy based on environment
+                    if (env.DEPLOY_ENV == 'staging') {
+                        echo 'Deploying to Staging...'
+                        sh '''
+                            # Simulate a deployment process (e.g., using SCP, rsync, etc.)
+                            # rsync -avz app.py user@staging-server:/path/to/deploy/
+                        '''
+                    } else if (env.DEPLOY_ENV == 'production') {
+                        echo 'Deploying to Production...'
+                        sh '''
+                            # Simulate deployment to production
+                            # rsync -avz app.py user@production-server:/path/to/deploy/
+                        '''
+                    } else {
+                        echo 'Unknown deployment environment!'
+                        error 'Deployment failed due to unknown environment!'
+                    }
+                }
             }
         }
     }
