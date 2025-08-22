@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Checking out source code...'
                 // Example Git checkout
-                git url: 'https://github.com/your-repo/your-project.git', branch: 'main'
+                git url: 'https://github.com/krishnadevi10/exp3.git', branch: 'main'
             }
         }
 
